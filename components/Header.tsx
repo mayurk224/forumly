@@ -9,32 +9,54 @@ import {
 } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { MenuIcon } from "lucide-react";
+import { ChevronLeftIcon, MenuIcon } from "lucide-react";
+import { useSidebar } from "./ui/sidebar";
 
 const Header = () => {
-  const { user } = useUser();
+  // const { user } = useUser();
+  const { toggleSidebar, open = false, isMobile } = useSidebar();
+  // const isBanned = user?.publicMetadata["IS_BANNED"] as boolean;
+
   return (
-    <header className="flex items-center justify-between p-3 border-b">
-      <div className="left flex items-center gap-2">
-        <MenuIcon className="block md:hidden w-6 h-6" />
+    <header className="flex items-center justify-between px-4 py-3 border-b bg-white">
+      {/* Left Section */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={toggleSidebar}
+          className=" focus:outline-none"
+          aria-label={open ? "Close Sidebar" : "Open Sidebar"}
+        >
+          {open && !isMobile ? (
+            <ChevronLeftIcon className="w-6 h-6" />
+          ) : (
+            <MenuIcon className="w-6 h-6" />
+          )}
+        </button>  
+
+        {/* Desktop Logo */}
         <Image
           src="/images/brandFullLogo.png"
-          alt="Brand Logo"
-          width={200}
-          height={50}
-          className="hidden md:block"
-        />
+          alt="Brand Icon"
+          width={150}
+          height={60}
+          className={open ? "hidden" : "block md:block"}
+
+        />       
+
+        {/* Mobile Logo */}
         <Image
           src="/images/brandlogo.png"
-          alt="Brand Name"
+          alt="Brand Icon"
           width={40}
           height={40}
           className="block md:hidden"
         />
       </div>
-      <div className="right">
+
+      {/* Right Section */}
+      <div className="flex items-center gap-2">
         <SignedIn>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </SignedIn>
 
         <SignedOut>
