@@ -331,10 +331,27 @@ export type GetSubredditsQueryResult = Array<{
   createdAt?: string;
 }>;
 
+// Source: ./sanity/lib/user/getUser.ts
+// Variable: getExistingUserQuery
+// Query: *[_type == "user" && _id == $id][0]
+export type GetExistingUserQueryResult = {
+  _id: string;
+  _type: "user";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  username?: string;
+  email?: string;
+  imageUrl?: string;
+  joinedAt?: string;
+  isReported?: boolean;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"subreddit\"] {\n        ...,\"slug\":slug.current,description, \"moderator\": moderator->,\n    } | order(_createdAt desc)": GetSubredditsQueryResult;
+    "*[_type == \"user\" && _id == $id][0]": GetExistingUserQueryResult;
   }
 }

@@ -23,6 +23,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { getSubreddits } from "@/sanity/lib/subreddit/getSubreddits";
+import CreateCommunityButton from "./header/CreateCommunityButton";
 
 // This is sample data.
 type SidebarData = {
@@ -78,6 +79,11 @@ export async function AppSidebar({
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuSubButton asChild>
+                <CreateCommunityButton/>
+              </SidebarMenuSubButton>
+            </SidebarMenuItem>
             {sidebarData.navMain.map((item, index) => (
               <Collapsible
                 key={item.title}

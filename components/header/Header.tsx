@@ -7,10 +7,10 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { Button } from "./ui/button";
 import Image from "next/image";
 import { ChevronLeftIcon, MenuIcon } from "lucide-react";
-import { useSidebar } from "./ui/sidebar";
+import { useSidebar } from "../ui/sidebar";
+import { Button } from "../ui/button";
 
 const Header = () => {
   // const { user } = useUser();
