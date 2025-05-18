@@ -8,6 +8,7 @@ import Image from "next/image";
 import TimeAgo from "../TimeAgo";
 import { CommentList } from "./CommentList";
 import { CommentReply } from "./CommentReply";
+import PostVoteButtons from "../post/PostVoteButtons";
 
 async function Comment({
   comment,
@@ -28,6 +29,14 @@ async function Comment({
     <article className="py-5 border-b border-gray-100 last:border-0">
       <div className="flex gap-4">
         {/* post vote */}
+
+        <PostVoteButtons
+          contentId={comment._id}
+          votes={comment.votes}
+          vote={{ voteType: userVoteStatus }}
+          contentType="comment"
+        />
+
         <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             {comment.author?.imageUrl ? (

@@ -517,6 +517,68 @@ export type GetExistingUserQueryResult = {
   isReported?: boolean;
 } | null;
 
+// Source: ./sanity/lib/vote/downvoteComment.ts
+// Variable: existingVoteDownvoteCommentQuery
+// Query: *[_type == "vote" && comment._ref == $commentId && user._ref == $userId][0]
+export type ExistingVoteDownvoteCommentQueryResult = {
+  _id: string;
+  _type: "vote";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  user?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "user";
+  };
+  voteType?: "downvote" | "upvote";
+  post?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  comment?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "comment";
+  };
+  createdAt?: string;
+} | null;
+
+// Source: ./sanity/lib/vote/downvotePost.ts
+// Variable: existingVoteDownvoteQuery
+// Query: *[_type == "vote" && post._ref == $postId && user._ref == $userId][0]
+export type ExistingVoteDownvoteQueryResult = {
+  _id: string;
+  _type: "vote";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  user?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "user";
+  };
+  voteType?: "downvote" | "upvote";
+  post?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  comment?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "comment";
+  };
+  createdAt?: string;
+} | null;
+
 // Source: ./sanity/lib/vote/getPostComments.ts
 // Variable: getPostCommentsQuery
 // Query: *[_type == "comment" && post._ref == $postId && !defined(parentComment)] {  ...,  _id,  content,  createdAt,  "author": author->,  "replies": *[_type == "comment" && parentComment._ref == ^._id],  "votes": {    "upvotes": count(*[_type == "vote" && comment._ref == ^._id && voteType == "upvote"]),    "downvotes": count(*[_type == "vote" && comment._ref == ^._id && voteType == "downvote"]),    "netScore": count(*[_type == "vote" && comment._ref == ^._id && voteType == "upvote"]) -                count(*[_type == "vote" && comment._ref == ^._id && voteType == "downvote"]),    "voteStatus": *[_type == "vote" && comment._ref == ^._id && user._ref == $userId][0].voteType  }} | order(votes.netScore desc, createdAt desc)
@@ -607,6 +669,68 @@ export type GetUserPostVoteStatusQueryResult = {
   voteType: "downvote" | "upvote" | null;
 } | null;
 
+// Source: ./sanity/lib/vote/upvoteComment.ts
+// Variable: existingVoteUpvoteCommentQuery
+// Query: *[_type == "vote" && comment._ref == $commentId && user._ref == $userId][0]
+export type ExistingVoteUpvoteCommentQueryResult = {
+  _id: string;
+  _type: "vote";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  user?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "user";
+  };
+  voteType?: "downvote" | "upvote";
+  post?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  comment?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "comment";
+  };
+  createdAt?: string;
+} | null;
+
+// Source: ./sanity/lib/vote/upvotePost.ts
+// Variable: existingVoteUpvoteQuery
+// Query: *[_type == "vote" && post._ref == $postId && user._ref == $userId][0]
+export type ExistingVoteUpvoteQueryResult = {
+  _id: string;
+  _type: "vote";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  user?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "user";
+  };
+  voteType?: "downvote" | "upvote";
+  post?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  comment?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "comment";
+  };
+  createdAt?: string;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -617,6 +741,8 @@ declare module "@sanity/client" {
     "\n                *[_type == \"subreddit\" && slug.current == $slug][0]{\n                _id\n                }\n            ": CheckSlugQueryResult;
     "*[_type == \"subreddit\"] {\n        ...,\"slug\":slug.current,description, \"moderator\": moderator->,\n    } | order(_createdAt desc)": GetSubredditsQueryResult;
     "*[_type == \"user\" && _id == $id][0]": GetExistingUserQueryResult;
+    "*[_type == \"vote\" && comment._ref == $commentId && user._ref == $userId][0]": ExistingVoteDownvoteCommentQueryResult | ExistingVoteUpvoteCommentQueryResult;
+    "*[_type == \"vote\" && post._ref == $postId && user._ref == $userId][0]": ExistingVoteDownvoteQueryResult | ExistingVoteUpvoteQueryResult;
     "\n        *[_type == \"comment\" && post._ref == $postId && !defined(parentComment)] {\n  ...,\n  _id,\n  content,\n  createdAt,\n  \"author\": author->,\n  \"replies\": *[_type == \"comment\" && parentComment._ref == ^._id],\n  \"votes\": {\n    \"upvotes\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"upvote\"]),\n    \"downvotes\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"downvote\"]),\n    \"netScore\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"upvote\"]) -\n                count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"downvote\"]),\n    \"voteStatus\": *[_type == \"vote\" && comment._ref == ^._id && user._ref == $userId][0].voteType\n  }\n} | order(votes.netScore desc, createdAt desc)\n\n        ": GetPostCommentsQueryResult;
     "\n        {\n        \"upvotes\":count(*[_type == \"vote\" && post._ref == $postId && voteType == \"upvote\"]),\n        \"downvotes\":count(*[_type == \"vote\" && post._ref == $postId && voteType == \"downvote\"]),\n        \"netScore\":count(*[_type == \"vote\" && post._ref == $postId && voteType == \"upvote\"]) - count(*[_type == \"vote\" && post._ref == $postId && voteType == \"downvote\"])\n        }\n        ": GetPostVotesQueryResult;
     "\n        *[_type == \"vote\" && post._ref == $postId && user._ref == $userId][0]{\n            voteType\n        }\n        ": GetUserPostVoteStatusQueryResult;

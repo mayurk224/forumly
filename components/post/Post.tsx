@@ -9,6 +9,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { MessagesSquare } from "lucide-react";
 import CommentInput from "../comment/CommentInput";
 import { CommentList } from "../comment/CommentList";
+import PostVoteButtons from "./PostVoteButtons";
 
 interface PostProps {
   post: AllPostsQueryResult[number];
@@ -23,30 +24,35 @@ async function Post({ post, userId }: PostProps) {
   return (
     <article
       key={post._id}
-      className="relative bg-white rounded-md shadow-sm border border-gray-200 hover:border-gray-300 transition-colors"
+      className="relative bg-white rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300"
     >
       <div className="flex">
-        {/* Vote Button */}
-        {/* <PostVoteButton contentId={post_id} votes={votes} vote={vote} contentType="post"/> */}
+        {/* Vote Buttons */}
+        <PostVoteButtons
+          contentId={post._id}
+          votes={votes}
+          vote={vote}
+          contentType="post"
+        />
 
         {/* Post Content */}
-        <div className="flex-1 p-3">
-          {/* subreddit icon */}
-          <div className="flex items-center gap-2">
+        <div className="flex-1 p-4 sm:p-6">
+          {/* Subreddit + Author Info */}
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-2">
             {post.subreddit && (
               <>
                 <a
                   href={`/community/${post.subreddit.slug}`}
-                  className="font-medium hover:underline"
+                  className="font-semibold text-gray-800 hover:underline"
                 >
                   c/{post.subreddit.title}
                 </a>
                 <span>•</span>
-                <span>Posted By</span>
+                <span>Posted by</span>
                 {post.author && (
                   <a
                     href={`/u/${post.author.username}`}
-                    className="font-medium hover:underline"
+                    className="font-medium hover:underline text-gray-700"
                   >
                     u/{post.author.username}
                   </a>
@@ -58,40 +64,48 @@ async function Post({ post, userId }: PostProps) {
               </>
             )}
           </div>
-          {post.subreddit && (
-            <div className="">
-              <h2 className="text-lg font-medium text-gray-900 mb-2">
-                {post.title}
-              </h2>
-            </div>
-          )}
-          {post.body && post.body[0]?.children?.[0]?.text && (
-            <div className="prose prose-sm max-w-none text-gray-700 mb-3">
+
+          {/* Title */}
+          <h2 className="text-xl font-semibold text-gray-900 mb-2 leading-tight">
+            {post.title}
+          </h2>
+
+          {/* Post Text */}
+          {post.body?.[0]?.children?.[0]?.text && (
+            <p className="text-gray-700 text-base mb-4 line-clamp-4">
               {post.body[0].children[0].text}
-            </div>
+            </p>
           )}
-          {post.image && post.image.asset && (
-            <div className="relative w-full h-96">
+
+          {/* Post Image */}
+          {post.image?.asset && (
+            <div className="relative w-full h-64 sm:h-80 rounded-lg overflow-hidden mb-4">
               <Image
                 src={urlFor(post.image).url()}
                 alt={post.image.alt || "Post Image"}
                 fill
-                className="object-cover rounded-md"
+                className="object-cover"
               />
             </div>
           )}
-          <button className="flex items-center px-1 py-2 gap-1 text-sm text-gray-500">
-            <MessagesSquare className="size-4" />
+
+          {/* Comments Summary Button */}
+          <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors mb-4">
+            <MessagesSquare className="w-4 h-4" />
             <span>{comments.length} Comments</span>
           </button>
 
-          <CommentInput postId={post._id} />
-          <CommentList postId={post._id} comments={comments} userId={userId} />
+          {/* Comment Input + List */}
+          <div className="mt-2 space-y-3">
+            <CommentInput postId={post._id} />
+            <CommentList
+              postId={post._id}
+              comments={comments}
+              userId={userId}
+            />
+          </div>
         </div>
       </div>
-      {/* Buttons */}
-      {/* report Button */}
-      {/* Delete button */}
     </article>
   );
 }
