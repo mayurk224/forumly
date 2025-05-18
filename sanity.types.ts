@@ -501,6 +501,42 @@ export type GetSubredditsQueryResult = Array<{
   createdAt?: string;
 }>;
 
+// Source: ./sanity/lib/subreddit/searchSubreddits.ts
+// Variable: searchSubredditsQuery
+// Query: *[_type == "subreddit" && title match $searchTerm + "*"] {            _id,title,"slug":slug.current,description, "moderator": moderator->,createdAt,image        } | order(createdAt desc)
+export type SearchSubredditsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  moderator: {
+    _id: string;
+    _type: "user";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    username?: string;
+    email?: string;
+    imageUrl?: string;
+    joinedAt?: string;
+    isReported?: boolean;
+  } | null;
+  createdAt: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+}>;
+
 // Source: ./sanity/lib/user/getUser.ts
 // Variable: getExistingUserQuery
 // Query: *[_type == "user" && _id == $id][0]
@@ -740,6 +776,7 @@ declare module "@sanity/client" {
     "\n            *[_type == \"subreddit\" && title == $name][0]{\n            _id\n            }\n        ": ChekingExistingQueryResult;
     "\n                *[_type == \"subreddit\" && slug.current == $slug][0]{\n                _id\n                }\n            ": CheckSlugQueryResult;
     "*[_type == \"subreddit\"] {\n        ...,\"slug\":slug.current,description, \"moderator\": moderator->,\n    } | order(_createdAt desc)": GetSubredditsQueryResult;
+    "\n        *[_type == \"subreddit\" && title match $searchTerm + \"*\"] {\n            _id,title,\"slug\":slug.current,description, \"moderator\": moderator->,createdAt,image\n        } | order(createdAt desc)\n        ": SearchSubredditsQueryResult;
     "*[_type == \"user\" && _id == $id][0]": GetExistingUserQueryResult;
     "*[_type == \"vote\" && comment._ref == $commentId && user._ref == $userId][0]": ExistingVoteDownvoteCommentQueryResult | ExistingVoteUpvoteCommentQueryResult;
     "*[_type == \"vote\" && post._ref == $postId && user._ref == $userId][0]": ExistingVoteDownvoteQueryResult | ExistingVoteUpvoteQueryResult;
