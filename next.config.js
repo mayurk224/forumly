@@ -1,9 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   /* config options here */
-  images:{
-    remotePatterns:[
+  images: {
+    remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.sanity.io",
@@ -28,7 +27,19 @@ const nextConfig: NextConfig = {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
-  }
+  },
+  // Disable symlinks for Windows compatibility
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-win32-x64-msvc',
+        'node_modules/@esbuild/win32-x64',
+        'node_modules/webpack'
+      ],
+    },
+  },
+  // Avoid symlink issues on Windows
+  output: 'standalone',
 };
 
-export default nextConfig;
+module.exports = nextConfig;

@@ -5,10 +5,12 @@ import { getSubredditBySlug } from "@/sanity/lib/subreddit/getSubredditBySlug";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
-export default async function CommunityPage({ params }: {
-  params: { slug: string };
+export default async function CommunityPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const community = await getSubredditBySlug(slug);
   if (!community) return null;
 
@@ -25,7 +27,9 @@ export default async function CommunityPage({ params }: {
               <div className="relative h-16 w-16 overflow-hidden rounded-full border dark:border-gray-700">
                 <Image
                   src={urlFor(community.image).url()}
-                  alt={community.image.alt || `${community.title} community icon`}
+                  alt={
+                    community.image.alt || `${community.title} community icon`
+                  }
                   fill
                   className="object-contain"
                   priority

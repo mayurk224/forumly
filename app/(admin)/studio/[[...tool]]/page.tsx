@@ -8,12 +8,20 @@
  */
 
 import { NextStudio } from "next-sanity/studio";
-import config from "../../../../sanity.config";
+import config from "@/sanity.config";
 
-export const dynamic = "force-static";
+// This route needs to be dynamic to properly handle the studio routes
+export const dynamic = "force-dynamic";
 
 export { metadata, viewport } from "next-sanity/studio";
 
-export default function StudioPage() {
+interface StudioPageProps {
+  params: {
+    tool: string[];
+  };
+}
+
+export default function StudioPage(_props: StudioPageProps) {
+  // The NextStudio component handles the routing internally based on the config
   return <NextStudio config={config} />;
 }
