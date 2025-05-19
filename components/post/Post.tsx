@@ -14,6 +14,7 @@ import CommentInput from "../comment/CommentInput";
 import { CommentList } from "../comment/CommentList";
 import PostVoteButtons from "./PostVoteButtons";
 import ReportButton from "../ReportButton";
+import DeleteButton from "../DeleteButton";
 
 interface PostProps {
   post: AllPostsQueryResult[number] | GetPostsForSubredditQueryResult[number];
@@ -112,6 +113,13 @@ async function Post({ post, userId }: PostProps) {
       </div>
       <div className="absolute top-0 right-0 p-2">
         <ReportButton contentId={post._id} />
+        {post.author?._id && (
+          <DeleteButton
+            contentId={post._id}
+            contentOwnerId={post.author?._id}
+            contentType="post"
+          />
+        )}
       </div>
     </article>
   );
