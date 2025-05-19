@@ -23,6 +23,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { getSubreddits } from "@/sanity/lib/subreddit/getSubreddits";
+import { GetSubredditsQueryResult } from "@/sanity.types";
 import CreateCommunityButton from "./header/CreateCommunityButton";
 
 // This is sample data.
@@ -41,14 +42,14 @@ type SidebarData = {
 export async function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const subreddits = await getSubreddits();
+  const subreddits = await getSubreddits() as GetSubredditsQueryResult;
   const sidebarData: SidebarData = {
     navMain: [
       {
         title: "Communities",
         url: "#",
         items:
-          subreddits?.map((subreddit) => ({
+          subreddits?.map((subreddit: GetSubredditsQueryResult[number]) => ({
             title: subreddit.title || "unknown",
             url: `/community/${subreddit.slug}`,
             isActive: false,

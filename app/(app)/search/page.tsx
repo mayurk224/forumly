@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { urlFor } from "@/sanity/lib/image";
 import { searchSubreddits } from "@/sanity/lib/subreddit/searchSubreddits";
+import { SearchSubredditsQueryResult } from "@/sanity.types";
 import Link from "next/link";
 import React from "react";
 
@@ -10,7 +11,7 @@ async function SearchPage({
   searchParams: Promise<{ query: string }>;
 }) {
   const { query } = await searchParams;
-  const subreddits = await searchSubreddits(query);
+  const subreddits = await searchSubreddits(query) as SearchSubredditsQueryResult;
   return (
     <>
       {/* Header */}
@@ -31,7 +32,7 @@ async function SearchPage({
       <section className="my-10">
         <div className="mx-auto max-w-7xl px-4">
           <ul className="flex flex-col gap-5">
-            {subreddits.map((subreddit) => (
+            {subreddits.map((subreddit: SearchSubredditsQueryResult[number]) => (
               <li
                 key={subreddit._id}
                 className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"

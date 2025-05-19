@@ -28,12 +28,11 @@ async function Comment({
   return (
     <article className="py-5 border-b border-gray-100 last:border-0">
       <div className="flex gap-4">
-        {/* post vote */}
-
+        {/* Post vote */}
         <PostVoteButtons
           contentId={comment._id}
-          votes={comment.votes}
-          vote={{ voteType: userVoteStatus }}
+          votes={comment.votes ?? []}
+          vote={{ voteType: userVoteStatus ?? null }}
           contentType="comment"
         />
 
@@ -43,7 +42,11 @@ async function Comment({
               <div className="flex-shrink-0">
                 <Image
                   src={comment.author.imageUrl}
-                  alt={comment.author.username || "User Image"}
+                  alt={
+                    comment.author.username
+                      ? `${comment.author.username}'s avatar`
+                      : "Anonymous user avatar"
+                  }
                   width={40}
                   height={40}
                   className="rounded-full"
@@ -55,16 +58,24 @@ async function Comment({
               </div>
             )}
             <h3 className="font-medium text-gray-900">
-              {comment.author?.username || "Annonymous"}
+              {comment.author?.username || "Anonymous"}
             </h3>
             <span className="text-sm text-gray-500">
-              <TimeAgo date={new Date(comment.createdAt! || "")} />
+              <TimeAgo date={new Date(comment.createdAt ?? "")} />
             </span>
           </div>
-          <p className="text-sm text-gray-700">{comment.content}</p>
-          <CommentReply postId={postId} comment={comment} />
+
+          {comment.isDeleted ? (
+            <p className="text-sm italic text-gray-400">[deleted]</p>
+          ) : (
+            <>
+              <p className="text-sm text-gray-700">{comment.content}</p>
+              <CommentReply postId={postId} comment={comment} />
+            </>
+          )}
+
           {replies.length > 0 && (
-            <div className="mt-3 ps-2 border-s-2 border-gray-100">
+            <div className="mt-3 pl-2 border-l-2 border-gray-100">
               <CommentList postId={postId} comments={replies} userId={userId} />
             </div>
           )}

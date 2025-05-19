@@ -23,7 +23,7 @@ const CreateCommunityButton = () => {
   const [open, setOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [name, setName] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -77,8 +77,6 @@ const CreateCommunityButton = () => {
     }
   };
 
-
-
   const handleCreateCommunity = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -121,13 +119,13 @@ const CreateCommunityButton = () => {
         );
 
         console.log("Community Created: ", result);
-        
-        if ('error' in result && result.error) {
+
+        if ("error" in result && result.error) {
           setErrorMessage(result.error);
-        } else if ('subreddit' in result && result.subreddit) {
+        } else if ("subreddit" in result && result.subreddit) {
           resetForm();
           setOpen(false);
-          router.push( `/community/${result.subreddit.slug?.current}`)
+          router.push(`/community/${result.subreddit.slug?.current}`);
         } else {
           setErrorMessage("Failed to create community. Please try again.");
         }
@@ -138,160 +136,157 @@ const CreateCommunityButton = () => {
     });
   };
 
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         disabled={!user}
-        className="w-full p-2 pl-5 flex items-center rounded-md cursor-pointer bg-black text-white hover:bg-black transition-all duration-200 disabled:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full p-2 pl-5 flex items-center rounded-md cursor-pointer bg-black text-white hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label={user ? "Create Community" : "Sign In to Create Community"}
       >
         <Plus className="w-4 h-4 mr-2" />
         {user ? "Create Community" : "Sign In to Create Community"}
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a Community</DialogTitle>
           <DialogDescription>
-            create a community/subreddit to share ideas and get feedback
+            Create a community/subreddit to share ideas and get feedback.
           </DialogDescription>
-          <form className="space-y-4 mt-2" onSubmit={handleCreateCommunity}>
-            {errorMessage && (
-              <div className="text-red-500 text-sm">{errorMessage}</div>
-            )}
+        </DialogHeader>
 
-            {/* Community Name */}
-            <div className="space-y-1">
-              <label
-                htmlFor="communityName"
-                className="block text-sm font-medium"
-              >
-                Community Name
-              </label>
-              <Input
-                type="text"
-                id="communityName"
-                name="name"
-                placeholder="Community Name"
-                className="w-full"
-                value={name}
-                onChange={handleNameChange}
-                required
-                minLength={3}
-                maxLength={21}
-              />
-            </div>
+        <form className="space-y-4 mt-2" onSubmit={handleCreateCommunity}>
+          {errorMessage && (
+            <div className="text-red-500 text-sm">{errorMessage}</div>
+          )}
 
-            {/* Slug */}
-            <div className="space-y-1">
-              <label htmlFor="slug" className="block text-sm font-medium">
-                Community Slug (URL)
-              </label>
-              <Input
-                type="text"
-                id="slug"
-                name="slug"
-                placeholder="my-community"
-                className="w-full"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                required
-                minLength={3}
-                maxLength={21}
-                pattern="^[a-z0-9]+(-[a-z0-9]+)*$"
-                title="Lowercase letters, numbers, and hyphens only"
-              />
-              <p className="text-xs text-muted-foreground">
-                This will be used in URL:{" "}
-                <strong>
-                  forumly.com/community/{slug || "community-slug"}
-                </strong>
-              </p>
-            </div>
+          {/* Community Name */}
+          <div className="space-y-1">
+            <label
+              htmlFor="communityName"
+              className="block text-sm font-medium"
+            >
+              Community Name
+            </label>
+            <Input
+              id="communityName"
+              name="name"
+              type="text"
+              placeholder="Community Name"
+              className="w-full"
+              value={name}
+              onChange={handleNameChange}
+              required
+              minLength={3}
+              maxLength={21}
+            />
+          </div>
 
-            {/* Description */}
-            <div className="space-y-1">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium"
-              >
-                Description
-              </label>
-              <Textarea
-                id="description"
-                name="description"
-                placeholder="Description"
-                className="w-full resize-none"
-                required
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-              />
-            </div>
+          {/* Slug */}
+          <div className="space-y-1">
+            <label htmlFor="slug" className="block text-sm font-medium">
+              Community Slug (URL)
+            </label>
+            <Input
+              id="slug"
+              name="slug"
+              type="text"
+              placeholder="my-community"
+              className="w-full"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              required
+              minLength={3}
+              maxLength={21}
+              pattern="^[a-z0-9]+(-[a-z0-9]+)*$"
+              title="Lowercase letters, numbers, and hyphens only"
+            />
+            <p className="text-xs text-muted-foreground">
+              This will be used in the URL:{" "}
+              <strong>
+                forumly.com/community/{slug?.trim() || "community-slug"}
+              </strong>
+            </p>
+          </div>
 
-            {/* Image Upload */}
-            <div className="space-y-1">
+          {/* Description */}
+          <div className="space-y-1">
+            <label htmlFor="description" className="block text-sm font-medium">
+              Description
+            </label>
+            <Textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              className="w-full resize-none"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              rows={3}
+            />
+          </div>
+
+          {/* Image Upload */}
+          <div className="space-y-1">
+            <label
+              htmlFor="community-image"
+              className="block text-sm font-medium"
+            >
+              Community Image (optional)
+            </label>
+
+            {imagePreview ? (
+              <div className="relative w-32 h-32 mx-auto">
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  fill
+                  className="object-cover rounded-full border"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-0 -right-3 cursor-pointer rounded-full text-red-500"
+                  aria-label="Remove uploaded image"
+                >
+                  <CircleX />
+                </button>
+              </div>
+            ) : (
               <label
                 htmlFor="community-image"
-                className="block text-sm font-medium"
+                className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
               >
-                Community Image (optional)
+                <ImageIcon className="w-6 h-6 text-gray-400 mb-2" />
+                <p className="text-xs text-gray-500">
+                  Click to upload an image
+                </p>
+                <Input
+                  id="community-image"
+                  name="community-image"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                  className="hidden"
+                />
               </label>
-              {imagePreview ? (
-                <div className="relative w-32 h-32 mx-auto">
-                  <Image
-                    src={imagePreview}
-                    alt="Preview"
-                    fill
-                    className="object-cover rounded-full border"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleRemoveImage}
-                    className="absolute top-0 -right-3 cursor-pointer rounded-full text-red-500"
-                  >
-                    <CircleX />
-                  </button>
-                </div>
-              ) : (
-                <label
-                  htmlFor="community-image"
-                  className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-                >
-                  <ImageIcon className="w-6 h-6 text-gray-400 mb-2" />
-                  <p className="text-xs text-gray-500">
-                    Click to upload an image
-                  </p>
-                  <Input
-                    id="community-image"
-                    name="community-image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    ref={fileInputRef}
-                    className="hidden"
-                  />
-                </label>
-              )}
-            </div>
-            <Button
-              className={`w-full py-2 px-4 rounded-md text-white ${
-                isPending
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : user
-                  ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-gray-500 cursor-not-allowed"
-              } transition-all duration-200`}
-              disabled={!user || isPending}
-              type="submit"
-            >
-              {isPending
-                ? "Creating..."
-                : user
-                ? "Create Community"
-                : "Sign In to Create Community"}
-            </Button>
-          </form>
-        </DialogHeader>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full py-2 px-4 rounded-md text-white transition-all duration-200"
+            disabled={!user || isPending}
+            variant={user ? "default" : "secondary"}
+          >
+            {isPending
+              ? "Creating..."
+              : user
+              ? "Create Community"
+              : "Sign In to Create Community"}
+          </Button>
+        </form>
       </DialogContent>
     </Dialog>
   );

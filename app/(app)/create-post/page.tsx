@@ -2,35 +2,40 @@ import CreateCommunityButton from "@/components/header/CreateCommunityButton";
 import CreatePostForm from "@/components/post/CreatePostForm";
 import { SubredditCombobox } from "@/components/subreddit/SubredditCombobox";
 import { getSubreddits } from "@/sanity/lib/subreddit/getSubreddits";
+import Link from "next/link";
 
 async function CreatePostPage({
-    searchParams,
-}:{
-    searchParams: Promise<{ subreddit: string }>;
+  searchParams,
+}: {
+  searchParams: Promise<{ subreddit: string }>;
 }) {
-    const {subreddit} = await searchParams;
-    const subreddits = await getSubreddits()
-  
-    if (subreddit) {
+  const { subreddit } = await searchParams;
+  const subreddits = await getSubreddits();
+
+  if (subreddit) {
     return (
       <>
         {/* Banner */}
         <section className="bg-white border-b">
-          <div className="mx-auto max-w-7xl px-4 py-6">
-            <div className="flex items-center">
-              <div>
-                <h1 className="text-2xl font-bold">Create Post</h1>
-                <p className="text-sm text-gray-600">
-                  Create a post in the{" "}
-                  <span className="font-bold">{subreddit}</span> community
-                </p>
-              </div>
+          <div className="mx-auto max-w-7xl px-4 py-6 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">Create Post</h1>
+              <p className="text-sm text-gray-600">
+                Create a post in the{" "}
+                <span className="font-bold">{subreddit}</span> community
+              </p>
             </div>
+            <Link
+              href="/"
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              &larr; Back to Home
+            </Link>
           </div>
         </section>
 
         {/* Content */}
-        <section className="my-8">
+        <section className="my-8 max-w-7xl mx-auto px-4">
           <CreatePostForm />
         </section>
       </>
@@ -41,15 +46,19 @@ async function CreatePostPage({
     <>
       {/* Banner */}
       <section className="bg-white border-b">
-        <div className="mx-auto max-w-7xl px-4 py-6">
-          <div className="flex items-center">
-            <div>
-              <h1 className="text-2xl font-bold">Create Post</h1>
-              <p className="text-sm text-gray-600">
-                Select a community for your post
-              </p>
-            </div>
+        <div className="mx-auto max-w-7xl px-4 py-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Create Post</h1>
+            <p className="text-sm text-gray-600">
+              Select a community for your post
+            </p>
           </div>
+          <Link
+            href="/"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            &larr; Back to Home
+          </Link>
         </div>
       </section>
 
@@ -82,4 +91,4 @@ async function CreatePostPage({
   );
 }
 
-export default CreatePostPage
+export default CreatePostPage;

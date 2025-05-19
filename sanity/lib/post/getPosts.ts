@@ -3,7 +3,7 @@ import { sanityFetch } from "../live";
 
 export async function getPosts() {
   const AllPostsQuery = defineQuery(`
-        *[_type == "post" && isDeleted != true] {
+        *[_type == "post" && isDeleted == false] {
             _id,
             title,
             "slug":slug.current,

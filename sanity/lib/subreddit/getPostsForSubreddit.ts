@@ -3,7 +3,7 @@ import { sanityFetch } from "../live";
 
 export async function getPostsForSubreddit(id: string) {
   const getPostsForSubredditQuery = defineQuery(`
-        *[_type == "post" && subreddit._ref == $id] {
+        *[_type == "post" && subreddit._ref == $id && isDeleted == false] {
         ...,
         "slug": slug.current,
         "author": author->,
@@ -13,7 +13,7 @@ export async function getPostsForSubreddit(id: string) {
         "downvotes": count(*[_type == "vote" && post._ref == ^._id && voteType == "downvote"]),
         "netScore": count(*[_type == "vote" && post._ref == ^._id && voteType == "upvote"]) - count(*[_type == "vote" && post._ref == ^._id && voteType == "downvote"]),
         "commentCount": count(*[_type == "comment" && post._ref == ^._id])
-      } | order(publishedAt desc) 
+      } | order(publishedAt desc)
         `);
   const posts = await sanityFetch({
     query: getPostsForSubredditQuery,

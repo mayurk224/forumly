@@ -12,7 +12,7 @@ export async function searchSubreddits(searchTerm: string) {
         `);
   const subreddits = await sanityFetch({
     query: searchSubredditsQuery,
-    params: { searchTerm: searchTerm.toLocaleLowerCase() },
+    params: { searchTerm: searchTerm.toLowerCase() },
   });
   return subreddits.data;
 }

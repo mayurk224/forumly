@@ -5,7 +5,6 @@ import {
   SignedOut,
   SignInButton,
   UserButton,
-  useUser,
 } from "@clerk/nextjs";
 import Image from "next/image";
 import { ChevronLeftIcon, MenuIcon } from "lucide-react";
@@ -24,7 +23,7 @@ const Header = () => {
       <div className="flex items-center gap-2">
         <button
           onClick={toggleSidebar}
-          className=" focus:outline-none"
+          className="focus:outline-none"
           aria-label={open ? "Close Sidebar" : "Open Sidebar"}
         >
           {open && !isMobile ? (
@@ -34,30 +33,36 @@ const Header = () => {
           )}
         </button>
 
-        {/* Desktop Logo */}
-        <Image
-          src="/images/brandFullLogo.png"
-          alt="Brand Icon"
-          width={150}
-          height={60}
-          className={open ? "hidden" : "block md:block"}
-        />
+        {/* Desktop Logo (hide if sidebar is open on desktop) */}
+        <div className="hidden md:block">
+          {!open && (
+            <Image
+              src="/images/brandFullLogo.png"
+              alt="Forumly Full Logo"
+              width={150}
+              height={60}
+              priority
+            />
+          )}
+        </div>
 
-        {/* Mobile Logo */}
-        <Image
-          src="/images/brandlogo.png"
-          alt="Brand Icon"
-          width={40}
-          height={40}
-          className="block md:hidden"
-        />
+        {/* Mobile Logo (always shown on mobile) */}
+        <div className="block md:hidden">
+          <Image
+            src="/images/brandlogo.png"
+            alt="Forumly Logo"
+            width={40}
+            height={40}
+            priority
+          />
+        </div>
       </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-2">
-        <CreatePost/>
+        <CreatePost />
         <SignedIn>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton signInUrl="/" />
         </SignedIn>
 
         <SignedOut>

@@ -100,7 +100,6 @@ function PostVoteButtons({
     });
   };
 
-
   return (
     <div className="flex flex-col items-center bg-white p-2 rounded-lg shadow-sm border w-12">
       <button

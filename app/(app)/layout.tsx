@@ -5,7 +5,6 @@ import "../globals.css";
 import {
   SidebarInset,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Header from "@/components/header/Header";
@@ -44,7 +43,7 @@ export default function RootLayout({
               <div className="flex flex-col">{children}</div>
             </SidebarInset>
           </SidebarProvider>
-          <SanityLive/>
+          <SanityLive />
         </body>
       </html>
     </ClerkProvider>

@@ -6,6 +6,6 @@ export async function getSubreddits() {
         ...,"slug":slug.current,description, "moderator": moderator->,
     } | order(_createdAt desc)`);
 
-  const subreddits = await sanityFetch({query: getSubredditsQuery});
+  const subreddits = await sanityFetch({ query: getSubredditsQuery });
   return subreddits.data;
 }

@@ -1,26 +1,44 @@
-import { GetCommentRepliesQueryResult, GetPostCommentsQueryResult } from "@/sanity.types";
+import {
+  GetCommentRepliesQueryResult,
+  GetPostCommentsQueryResult,
+} from "@/sanity.types";
 import Comment from "./Comment";
 
 export async function CommentList({
-    postId,
-    comments,
-    userId,
-}:{
-    postId: string;
-    comments: GetPostCommentsQueryResult | GetCommentRepliesQueryResult;
-    userId: string | null;
-}){
-    const isRootComment = !comments.some((comment)=>{
-        comment.parentComment
-    })
-    return <section>
-        <div className="">
-            {isRootComment &&(
-                <h2 className="text-lg font-semibold text-gray-900">Comments ({comments.length})</h2>
-            )}
+  postId,
+  comments,
+  userId,
+}: {
+  postId: string;
+  comments: GetPostCommentsQueryResult | GetCommentRepliesQueryResult;
+  userId: string | null;
+}) {
+  const isRootComment = !comments.some((comment) => {
+    comment.parentComment;
+  });
+  return (
+    <section aria-label="Comments section">
+      {isRootComment && (
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Comments ({comments.length})
+          </h2>
+          {comments.length === 0 && (
+            <p className="text-sm text-gray-500">
+              No comments yet. Be the first to comment!
+            </p>
+          )}
         </div>
-        {comments.map((comment) => (
-            <Comment key={comment._id} postId={postId} comment={comment} userId={userId}/>
-        ))}
+      )}
+      {comments.length > 0 && (
+        <ul className="mt-4 space-y-4">
+          {comments.map((comment) => (
+            <li key={comment._id}>
+              <Comment postId={postId} comment={comment} userId={userId} />
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
+  );
 }

@@ -47,7 +47,11 @@ async function Post({ post, userId }: PostProps) {
             {post.subreddit && (
               <>
                 <a
-                  href={`/community/${post.subreddit?.slug?.current ?? ""}`}
+                  href={`/community/${
+                    typeof post.subreddit.slug === 'string'
+                      ? post.subreddit.slug
+                      : post.subreddit.slug?.current ?? ""
+                  }`}
                   className="font-semibold text-gray-800 hover:underline"
                 >
                   c/{post.subreddit.title}
@@ -64,7 +68,9 @@ async function Post({ post, userId }: PostProps) {
                 )}
                 <span>•</span>
                 {post.publishedAt && (
-                  <TimeAgo date={new Date(post.publishedAt)} />
+                  <time dateTime={new Date(post.publishedAt).toISOString()}>
+                    <TimeAgo date={new Date(post.publishedAt)} />
+                  </time>
                 )}
               </>
             )}
@@ -77,7 +83,7 @@ async function Post({ post, userId }: PostProps) {
 
           {/* Post Text */}
           {post.body?.[0]?.children?.[0]?.text && (
-            <p className="text-gray-700 text-base mb-4 line-clamp-4">
+            <p className="text-gray-700 text-base mb-4 line-clamp-4 sm:line-clamp-none">
               {post.body[0].children[0].text}
             </p>
           )}
@@ -94,13 +100,16 @@ async function Post({ post, userId }: PostProps) {
             </div>
           )}
 
-          {/* Comments Summary Button */}
-          <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors mb-4">
+          {/* Comments Summary */}
+          <button
+            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors mb-4"
+            aria-label="View comments"
+          >
             <MessagesSquare className="w-4 h-4" />
             <span>{comments.length} Comments</span>
           </button>
 
-          {/* Comment Input + List */}
+          {/* Comment Section */}
           <div className="mt-2 space-y-3">
             <CommentInput postId={post._id} />
             <CommentList
@@ -111,12 +120,14 @@ async function Post({ post, userId }: PostProps) {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 right-0 p-2">
+
+      {/* Control Buttons */}
+      <div className="absolute top-0 right-0 flex flex-col items-end space-y-1 p-2">
         <ReportButton contentId={post._id} />
         {post.author?._id && (
           <DeleteButton
             contentId={post._id}
-            contentOwnerId={post.author?._id}
+            contentOwnerId={post.author._id}
             contentType="post"
           />
         )}

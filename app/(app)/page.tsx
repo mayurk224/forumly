@@ -5,11 +5,11 @@ export default function Home() {
     <>
       {/* Banner */}
       <section>
-        <div className="mx-auto mx-w-7xl px-4 py-6">
+        <div className="mx-auto max-w-7xl px-4 py-6">
           <div className="flex items-center">
-            <div className="">
-              <h1>Home</h1>
-              <p>Recent post from all communities</p>
+            <div>
+              <h1 className="text-2xl font-bold">Home</h1>
+              <p className="text-gray-600">Recent posts from all communities</p>
             </div>
           </div>
         </div>
@@ -17,9 +17,9 @@ export default function Home() {
 
       {/* Posts */}
       <section className="my-8">
-        <div className="mx-auto mx-w-7xl px-4">
+        <div className="mx-auto max-w-7xl px-4">
           <div className="flex flex-col gap-4">
-            <PostList/>
+            <PostList />
           </div>
         </div>
       </section>
