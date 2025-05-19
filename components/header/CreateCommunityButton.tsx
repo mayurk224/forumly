@@ -129,9 +129,11 @@ const CreateCommunityButton = () => {
         } else {
           setErrorMessage("Failed to create community. Please try again.");
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Create Community Error:", error);
-        setErrorMessage(error?.message || "An unexpected error occurred.");
+        setErrorMessage(
+          error instanceof Error ? error.message : "An unexpected error occurred."
+        );
       }
     });
   };

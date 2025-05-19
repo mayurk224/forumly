@@ -13,9 +13,9 @@ export async function CommentList({
   comments: GetPostCommentsQueryResult | GetCommentRepliesQueryResult;
   userId: string | null;
 }) {
-  const isRootComment = !comments.some((comment) => {
-    comment.parentComment;
-  });
+  const isRootComment = !comments.some((comment) =>
+    comment.parentComment !== null && comment.parentComment !== undefined
+  );
   return (
     <section aria-label="Comments section">
       {isRootComment && (
