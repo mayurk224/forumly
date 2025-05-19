@@ -5,13 +5,9 @@ import { getSubredditBySlug } from "@/sanity/lib/subreddit/getSubredditBySlug";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
-interface CommunityPageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export default async function CommunityPage({ params }: CommunityPageProps) {
+export default async function CommunityPage({ params }: {
+  params: { slug: string };
+}) {
   const { slug } = params;
   const community = await getSubredditBySlug(slug);
   if (!community) return null;

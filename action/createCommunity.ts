@@ -14,7 +14,7 @@ export async function createCommunity(
   imageBase64: string | null | undefined,
   imageFileName: string | null | undefined,
   imageContentType: string | null | undefined,
-  slug?: string,
+  slug: string,
   description?: string
 ) {
   try {
