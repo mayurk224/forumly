@@ -2,8 +2,6 @@
 
 import TimeAgoComponent from "react-timeago";
 
-export default function TimeAgo({date}: {date: Date}) {
-  return (
-    <TimeAgoComponent date={date} />
-  )
+export default function TimeAgo({ date }: { date: Date }) {
+  return <TimeAgoComponent date={date} />;
 }

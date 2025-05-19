@@ -1,16 +1,16 @@
-import { Search } from "lucide-react"
+import { Search } from "lucide-react";
 
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/ui/label";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarInput,
-} from "@/components/ui/sidebar"
-import Form from "next/form"
+} from "@/components/ui/sidebar";
+import Form from "next/form";
 
 export function SearchForm() {
   return (
-    <Form action="/search" >
+    <Form action="/search">
       <SidebarGroup className="py-0">
         <SidebarGroupContent className="relative">
           <Label htmlFor="search" className="sr-only">
@@ -26,5 +26,5 @@ export function SearchForm() {
         </SidebarGroupContent>
       </SidebarGroup>
     </Form>
-  )
+  );
 }

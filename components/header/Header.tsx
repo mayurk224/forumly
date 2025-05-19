@@ -1,16 +1,13 @@
 "use client";
 
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { ChevronLeftIcon, MenuIcon } from "lucide-react";
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import CreatePost from "../post/CreatePost";
+import Link from "next/link";
+import { ModeToggle } from "../ModeToggle";
 
 const Header = () => {
   // const { user } = useUser();
@@ -18,7 +15,7 @@ const Header = () => {
   // const isBanned = user?.publicMetadata["IS_BANNED"] as boolean;
 
   return (
-    <header className="flex items-center justify-between px-4 py-3 border-b bg-white">
+    <header className="flex items-center justify-between px-4 py-3 border-b bg-white dark:bg-[#171717]">
       {/* Left Section */}
       <div className="flex items-center gap-2">
         <button
@@ -34,7 +31,7 @@ const Header = () => {
         </button>
 
         {/* Desktop Logo (hide if sidebar is open on desktop) */}
-        <div className="hidden md:block">
+        <Link href="/" className="hidden md:block">
           {!open && (
             <Image
               src="/images/brandFullLogo.png"
@@ -44,7 +41,7 @@ const Header = () => {
               priority
             />
           )}
-        </div>
+        </Link>
 
         {/* Mobile Logo (always shown on mobile) */}
         <div className="block md:hidden">
@@ -60,6 +57,7 @@ const Header = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-2">
+        <ModeToggle />
         <CreatePost />
         <SignedIn>
           <UserButton signInUrl="/" />

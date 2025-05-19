@@ -76,9 +76,7 @@ export function SubredditCombobox({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === subreddit.slug
-                        ? "opacity-100"
-                        : "opacity-0"
+                      value === subreddit.slug ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {subreddit.title}

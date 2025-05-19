@@ -18,12 +18,12 @@ export async function createCommunity(
   description?: string
 ) {
   try {
-    const user = await getUser()
-    if("error" in user) {
+    const user = await getUser();
+    if ("error" in user) {
       return { error: user.error };
     }
     let imageData: ImageData = null;
-    if(imageBase64 && imageFileName && imageContentType) {
+    if (imageBase64 && imageFileName && imageContentType) {
       imageData = {
         base64: imageBase64,
         fileName: imageFileName,

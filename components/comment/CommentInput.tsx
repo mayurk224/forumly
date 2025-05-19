@@ -46,11 +46,13 @@ function CommentInput({
         type="text"
         placeholder={user ? "Add a comment..." : "Sign in to comment"}
         autoComplete="off"
+        className="bg-white dark:bg-zinc-900 text-black dark:text-white border-zinc-300 dark:border-zinc-700"
       />
       <Button
         variant="outline"
         type="submit"
         disabled={isPending || !user || !content.trim()}
+        className="border-zinc-300 dark:border-zinc-700 text-black dark:text-white bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800"
       >
         {isPending ? "Commenting..." : "Comment"}
       </Button>

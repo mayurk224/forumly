@@ -101,12 +101,12 @@ function PostVoteButtons({
   };
 
   return (
-    <div className="flex flex-col items-center bg-white p-2 rounded-lg shadow-sm border w-12">
+    <div className="flex flex-col items-center bg-white dark:bg-zinc-900 p-2 rounded-lg shadow-sm border dark:border-zinc-800 w-12">
       <button
         className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200 ${
           optimisticVotes?.voteType === "upvote"
-            ? "bg-orange-100 text-orange-500"
-            : "hover:bg-gray-100 text-gray-400"
+            ? "bg-orange-100 text-orange-500 dark:bg-orange-900 dark:text-orange-400"
+            : "hover:bg-gray-100 text-gray-400 dark:hover:bg-zinc-800 dark:text-zinc-400"
         } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
         onClick={handleUpVote}
         disabled={isPending || !isSignedIn || !user}
@@ -115,15 +115,15 @@ function PostVoteButtons({
         <ArrowUp className="w-5 h-5" />
       </button>
 
-      <span className="text-sm font-semibold text-gray-700 my-1">
+      <span className="text-sm font-semibold text-gray-700 dark:text-zinc-200 my-1">
         {optimisticScore}
       </span>
 
       <button
         className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200 ${
           optimisticVotes?.voteType === "downvote"
-            ? "bg-orange-100 text-orange-500"
-            : "hover:bg-gray-100 text-gray-400"
+            ? "bg-orange-100 text-orange-500 dark:bg-orange-900 dark:text-orange-400"
+            : "hover:bg-gray-100 text-gray-400 dark:hover:bg-zinc-800 dark:text-zinc-400"
         } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
         onClick={handleDownVote}
         disabled={isPending || !isSignedIn || !user}

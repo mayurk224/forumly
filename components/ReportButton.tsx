@@ -44,7 +44,7 @@ function ReportButton({ contentId }: ReportButtonProps) {
       disabled={!isSignedIn || isLoading || isReported}
     >
       <Flag className={`size-4 ${isReported ? "fill-red-500" : ""}`} />
-      <span>
+      <span className="hidden sm:block">
         {isReported ? "Reported" : isSignedIn ? "Report" : "Sign in to report"}
       </span>
     </button>

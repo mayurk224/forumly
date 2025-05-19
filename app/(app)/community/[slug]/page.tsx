@@ -6,11 +6,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import React from "react";
 
-async function CommunityPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+async function CommunityPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const community = await getSubredditBySlug(slug);
   if (!community) {
@@ -21,11 +17,11 @@ async function CommunityPage({
   return (
     <>
       {/* Community Banner */}
-      <section className="bg-white border-b">
+      <section className="bg-white border-b dark:bg-gray-900 dark:border-gray-800">
         <div className="mx-auto max-w-7xl px-4 py-6">
           <div className="flex items-center gap-4">
             {community?.image && community.image.asset?._ref && (
-              <div className="relative h-16 w-16 overflow-hidden rounded-full border">
+              <div className="relative h-16 w-16 overflow-hidden rounded-full border dark:border-gray-700">
                 <Image
                   src={urlFor(community.image).url()}
                   alt={
@@ -38,9 +34,13 @@ async function CommunityPage({
               </div>
             )}
             <div>
-              <h1 className="text-2xl font-bold">{community?.title}</h1>
+              <h1 className="text-2xl font-bold dark:text-white">
+                {community?.title}
+              </h1>
               {community?.description && (
-                <p className="text-sm text-gray-600">{community.description}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {community.description}
+                </p>
               )}
             </div>
           </div>
@@ -56,8 +56,10 @@ async function CommunityPage({
                 <Post key={post._id} post={post} userId={user?.id || null} />
               ))
             ) : (
-              <div className="bg-white rounded-md p-6 text-center">
-                <p className="text-gray-500">No posts in this community yet.</p>
+              <div className="bg-white dark:bg-gray-900 rounded-md p-6 text-center">
+                <p className="text-gray-500 dark:text-gray-400">
+                  No posts in this community yet.
+                </p>
               </div>
             )}
           </div>

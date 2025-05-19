@@ -20,11 +20,11 @@ export async function CommentList({
     <section aria-label="Comments section">
       {isRootComment && (
         <div>
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             Comments ({comments.length})
           </h2>
           {comments.length === 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               No comments yet. Be the first to comment!
             </p>
           )}

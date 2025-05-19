@@ -42,7 +42,7 @@ type SidebarData = {
 export async function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const subreddits = await getSubreddits() as GetSubredditsQueryResult;
+  const subreddits = (await getSubreddits()) as GetSubredditsQueryResult;
   const sidebarData: SidebarData = {
     navMain: [
       {
@@ -82,7 +82,7 @@ export async function AppSidebar({
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuSubButton asChild>
-                <CreateCommunityButton/>
+                <CreateCommunityButton />
               </SidebarMenuSubButton>
             </SidebarMenuItem>
             {sidebarData.navMain.map((item, index) => (

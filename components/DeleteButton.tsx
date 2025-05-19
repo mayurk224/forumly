@@ -29,7 +29,8 @@ function DeleteButton({
   if (!isOwner) return null;
 
   const handleDelete = async () => {
-    if (!window.confirm(`Are you sure you want to delete this ${contentType}?`)) return;
+    if (!window.confirm(`Are you sure you want to delete this ${contentType}?`))
+      return;
 
     setIsDeleted(true);
     setError(null);
@@ -64,14 +65,12 @@ function DeleteButton({
         }`}
       >
         <Trash2 className="size-4" />
-        <span>{isDeleted ? "Deleting..." : "Delete"}</span>
+        <span className="hidden sm:block">
+          {isDeleted ? "Deleting..." : "Delete"}
+        </span>
       </button>
 
-      {error && (
-        <p className="text-sm text-red-500 mt-1">
-          {error}
-        </p>
-      )}
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </>
   );
 }

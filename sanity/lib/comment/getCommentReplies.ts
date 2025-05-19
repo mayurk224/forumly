@@ -24,10 +24,10 @@ export async function getCommentReplies(
 
         `);
 
-        const result = await sanityFetch({
-            query: getCommentRepliesQuery,
-            params: { commentId, userId: userId || "" },
-        });
+  const result = await sanityFetch({
+    query: getCommentRepliesQuery,
+    params: { commentId, userId: userId || "" },
+  });
 
-        return result.data || [];
+  return result.data || [];
 }

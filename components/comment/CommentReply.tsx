@@ -27,7 +27,7 @@ export function CommentReply({
     <div>
       <div className="flex items-center gap-2">
         <button
-          className="flex items-center gap-1.5 font-medium text-gray-500 hover:text-green-500 transition-colors mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-1.5 font-medium text-gray-500 hover:text-green-500 dark:text-gray-400 dark:hover:text-green-400 transition-colors mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={() => setIsReplying(!isReplying)}
           disabled={!isSignedIn}
           aria-label={isReplying ? "Cancel reply" : "Reply to comment"}
@@ -50,7 +50,7 @@ export function CommentReply({
       </div>
 
       {isReplying && (
-        <div className="mt-3 ps-2 border-s-2 border-gray-100">
+        <div className="mt-3 ps-2 border-s-2 border-gray-100 dark:border-gray-800">
           <CommentInput postId={postId} parentCommentId={comment._id} />
         </div>
       )}

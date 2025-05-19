@@ -37,14 +37,14 @@ export const subredditType = defineType({
       title: "Image",
       type: "image",
       description: "The subreddit's image",
-      fields:[
+      fields: [
         {
           name: "alt",
           title: "Alt Text",
           type: "string",
           description: "Alternative text for the image",
         },
-      ]
+      ],
     }),
     defineField({
       name: "moderator",

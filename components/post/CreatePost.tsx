@@ -20,8 +20,14 @@ function CreatePost() {
   };
 
   return (
-    <Button onClick={handleCreatePost} variant={"outline"} disabled={!user}>
-      <Plus className="w-4 h-4 mr-2" />
+    <Button
+      onClick={handleCreatePost}
+      variant="outline"
+      disabled={!user}
+      className="flex items-center gap-2 cursor-pointer bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+      title={!user ? "Sign in required to create a post" : "Create a new post"}
+    >
+      <Plus className="w-4 h-4" />
       {user ? "Create Post" : "Sign In to Create Post"}
     </Button>
   );

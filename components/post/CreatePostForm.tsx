@@ -119,14 +119,16 @@ function CreatePostForm() {
       <form onSubmit={handleCreatePost} className="space-y-6 mt-4">
         {/* Error Message */}
         {errorMessage && (
-          <div className="text-red-500 text-sm">{errorMessage}</div>
+          <div className="text-red-500 dark:text-red-400 text-sm">
+            {errorMessage}
+          </div>
         )}
 
         {/* Title Field */}
         <div className="space-y-1">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
           >
             Title
           </label>
@@ -134,7 +136,7 @@ function CreatePostForm() {
             id="title"
             name="title"
             placeholder="Title of your post"
-            className="w-full"
+            className="w-full dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -146,15 +148,16 @@ function CreatePostForm() {
         <div className="space-y-1">
           <label
             htmlFor="body"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-200"
           >
-            Body <span className="text-gray-400">(optional)</span>
+            Body{" "}
+            <span className="text-gray-400 dark:text-gray-500">(optional)</span>
           </label>
           <Textarea
             id="body"
             name="body"
             placeholder="Write something..."
-            className="w-full resize-y"
+            className="w-full resize-y dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={5}
@@ -163,12 +166,13 @@ function CreatePostForm() {
 
         {/* Image Upload */}
         <div className="space-y-1">
-          <label className="block text-sm font-medium text-gray-700">
-            Image <span className="text-gray-400">(optional)</span>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            Image{" "}
+            <span className="text-gray-400 dark:text-gray-500">(optional)</span>
           </label>
 
           {imagePreview ? (
-            <div className="relative w-full h-64 rounded border overflow-hidden">
+            <div className="relative w-full h-64 rounded border overflow-hidden dark:border-gray-700">
               <Image
                 src={imagePreview}
                 alt="Post preview"
@@ -179,7 +183,7 @@ function CreatePostForm() {
                 type="button"
                 onClick={removeImage}
                 aria-label="Remove image"
-                className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
               >
                 ×
               </button>
@@ -187,10 +191,12 @@ function CreatePostForm() {
           ) : (
             <label
               htmlFor="post-image"
-              className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+              className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              <ImageIcon className="w-6 h-6 mb-2 text-gray-400" />
-              <p className="text-xs text-gray-500">Click to upload an image</p>
+              <ImageIcon className="w-6 h-6 mb-2 text-gray-400 dark:text-gray-500" />
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Click to upload an image
+              </p>
               <input
                 id="post-image"
                 name="post-image"
@@ -207,7 +213,7 @@ function CreatePostForm() {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 transition"
+          className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 transition dark:bg-red-700 dark:hover:bg-red-800"
           disabled={isLoading}
         >
           {isLoading ? "Creating..." : "Post"}

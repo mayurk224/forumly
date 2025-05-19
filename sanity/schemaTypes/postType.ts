@@ -44,7 +44,7 @@ export const postType = defineType({
       name: "image",
       title: "Image",
       type: "image",
-      fields:[
+      fields: [
         {
           name: "alt",
           title: "Alt Text",

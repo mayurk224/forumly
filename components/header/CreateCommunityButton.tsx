@@ -140,11 +140,11 @@ const CreateCommunityButton = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         disabled={!user}
-        className="w-full p-2 pl-5 flex items-center rounded-md cursor-pointer bg-black text-white hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full p-2 pl-5 flex items-center gap-2 rounded-md cursor-pointer bg-black text-white hover:bg-gray-900 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label={user ? "Create Community" : "Sign In to Create Community"}
       >
-        <Plus className="w-4 h-4 mr-2" />
-        {user ? "Create Community" : "Sign In to Create Community"}
+        <Plus className="w-4 h-4" />
+        {user ? "Create Community" : "Sign In first"}
       </DialogTrigger>
 
       <DialogContent>
@@ -157,14 +157,16 @@ const CreateCommunityButton = () => {
 
         <form className="space-y-4 mt-2" onSubmit={handleCreateCommunity}>
           {errorMessage && (
-            <div className="text-red-500 text-sm">{errorMessage}</div>
+            <div className="text-red-500 dark:text-red-400 text-sm">
+              {errorMessage}
+            </div>
           )}
 
           {/* Community Name */}
           <div className="space-y-1">
             <label
               htmlFor="communityName"
-              className="block text-sm font-medium"
+              className="block text-sm font-medium dark:text-gray-200"
             >
               Community Name
             </label>
@@ -173,7 +175,7 @@ const CreateCommunityButton = () => {
               name="name"
               type="text"
               placeholder="Community Name"
-              className="w-full"
+              className="w-full dark:bg-gray-900 dark:text-white dark:border-gray-700"
               value={name}
               onChange={handleNameChange}
               required
@@ -184,7 +186,10 @@ const CreateCommunityButton = () => {
 
           {/* Slug */}
           <div className="space-y-1">
-            <label htmlFor="slug" className="block text-sm font-medium">
+            <label
+              htmlFor="slug"
+              className="block text-sm font-medium dark:text-gray-200"
+            >
               Community Slug (URL)
             </label>
             <Input
@@ -192,7 +197,7 @@ const CreateCommunityButton = () => {
               name="slug"
               type="text"
               placeholder="my-community"
-              className="w-full"
+              className="w-full dark:bg-gray-900 dark:text-white dark:border-gray-700"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               required
@@ -201,7 +206,7 @@ const CreateCommunityButton = () => {
               pattern="^[a-z0-9]+(-[a-z0-9]+)*$"
               title="Lowercase letters, numbers, and hyphens only"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground dark:text-gray-400">
               This will be used in the URL:{" "}
               <strong>
                 forumly.com/community/{slug?.trim() || "community-slug"}
@@ -211,14 +216,17 @@ const CreateCommunityButton = () => {
 
           {/* Description */}
           <div className="space-y-1">
-            <label htmlFor="description" className="block text-sm font-medium">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium dark:text-gray-200"
+            >
               Description
             </label>
             <Textarea
               id="description"
               name="description"
               placeholder="Description"
-              className="w-full resize-none"
+              className="w-full resize-none dark:bg-gray-900 dark:text-white dark:border-gray-700"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -230,7 +238,7 @@ const CreateCommunityButton = () => {
           <div className="space-y-1">
             <label
               htmlFor="community-image"
-              className="block text-sm font-medium"
+              className="block text-sm font-medium dark:text-gray-200"
             >
               Community Image (optional)
             </label>
@@ -241,12 +249,12 @@ const CreateCommunityButton = () => {
                   src={imagePreview}
                   alt="Preview"
                   fill
-                  className="object-cover rounded-full border"
+                  className="object-cover rounded-full border dark:border-gray-700"
                 />
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute top-0 -right-3 cursor-pointer rounded-full text-red-500"
+                  className="absolute top-0 -right-3 cursor-pointer rounded-full text-red-500 dark:text-red-400"
                   aria-label="Remove uploaded image"
                 >
                   <CircleX />
@@ -255,10 +263,10 @@ const CreateCommunityButton = () => {
             ) : (
               <label
                 htmlFor="community-image"
-                className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <ImageIcon className="w-6 h-6 text-gray-400 mb-2" />
-                <p className="text-xs text-gray-500">
+                <ImageIcon className="w-6 h-6 text-gray-400 dark:text-gray-500 mb-2" />
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Click to upload an image
                 </p>
                 <Input
@@ -276,7 +284,7 @@ const CreateCommunityButton = () => {
 
           <Button
             type="submit"
-            className="w-full py-2 px-4 rounded-md text-white transition-all duration-200"
+            className="w-full py-2 px-4 rounded-md text-white transition-all duration-200 bg-black hover:bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700"
             disabled={!user || isPending}
             variant={user ? "default" : "secondary"}
           >
