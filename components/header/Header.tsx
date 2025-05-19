@@ -44,7 +44,7 @@ const Header = () => {
         </Link>
 
         {/* Mobile Logo (always shown on mobile) */}
-        <div className="block md:hidden">
+        <Link href="/" className="block md:hidden">
           <Image
             src="/images/brandlogo.png"
             alt="Forumly Logo"
@@ -52,7 +52,7 @@ const Header = () => {
             height={40}
             priority
           />
-        </div>
+        </Link>
       </div>
 
       {/* Right Section */}
