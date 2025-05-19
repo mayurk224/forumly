@@ -558,7 +558,7 @@ export type GetPostsForSubredditQueryResult = Array<{
 
 // Source: ./sanity/lib/subreddit/getSubredditBySlug.ts
 // Variable: getSubredditBySlugQuery
-// Query: *[_type == "subreddit" && slug.current == $slug][0] {            ...,            "slug":slug.current,            "moderator": moderator->,            image        }
+// Query: *[_type == "subreddit" && slug.current == $slug][0] {      ...,      "slug": slug.current,      "moderator": moderator->,    }
 export type GetSubredditBySlugQueryResult = {
   _id: string;
   _type: "subreddit";
@@ -568,7 +568,7 @@ export type GetSubredditBySlugQueryResult = {
   title?: string;
   description?: string;
   slug: string | null;
-  image: {
+  image?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -580,7 +580,7 @@ export type GetSubredditBySlugQueryResult = {
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  } | null;
+  };
   moderator: {
     _id: string;
     _type: "user";
@@ -911,7 +911,7 @@ declare module "@sanity/client" {
     "\n            *[_type == \"subreddit\" && title == $name][0]{\n            _id\n            }\n        ": ChekingExistingQueryResult;
     "\n                *[_type == \"subreddit\" && slug.current == $slug][0]{\n                _id\n                }\n            ": CheckSlugQueryResult;
     "\n        *[_type == \"post\" && subreddit._ref == $id] {\n        ...,\n        \"slug\": slug.current,\n        \"author\": author->,\n        \"subreddit\": subreddit->,\n        \"category\": category->,\n        \"upvotes\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"upvote\"]),\n        \"downvotes\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"downvote\"]),\n        \"netScore\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"upvote\"]) - count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"downvote\"]),\n        \"commentCount\": count(*[_type == \"comment\" && post._ref == ^._id])\n      } | order(publishedAt desc) \n        ": GetPostsForSubredditQueryResult;
-    "\n        *[_type == \"subreddit\" && slug.current == $slug][0] {\n            ...,\n            \"slug\":slug.current,\n            \"moderator\": moderator->,\n            image\n        }\n        ": GetSubredditBySlugQueryResult;
+    "*[_type == \"subreddit\" && slug.current == $slug][0] {\n      ...,\n      \"slug\": slug.current,\n      \"moderator\": moderator->,\n    }": GetSubredditBySlugQueryResult;
     "*[_type == \"subreddit\"] {\n        ...,\"slug\":slug.current,description, \"moderator\": moderator->,\n    } | order(_createdAt desc)": GetSubredditsQueryResult;
     "\n        *[_type == \"subreddit\" && title match $searchTerm + \"*\"] {\n            _id,title,\"slug\":slug.current,description, \"moderator\": moderator->,createdAt,image\n        } | order(createdAt desc)\n        ": SearchSubredditsQueryResult;
     "*[_type == \"user\" && _id == $id][0]": GetExistingUserQueryResult;

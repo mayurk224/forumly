@@ -1,5 +1,8 @@
 import React from "react";
-import { AllPostsQueryResult, GetPostsForSubredditQueryResult } from "@/sanity.types";
+import {
+  AllPostsQueryResult,
+  GetPostsForSubredditQueryResult,
+} from "@/sanity.types";
 import { getPostVotes } from "@/sanity/lib/vote/getPostVotes";
 import { getUserPostVoteStatus } from "@/sanity/lib/vote/getUserPostVoteStatus";
 import { getPostComments } from "@/sanity/lib/vote/getPostComments";
@@ -42,7 +45,7 @@ async function Post({ post, userId }: PostProps) {
             {post.subreddit && (
               <>
                 <a
-                  href={`/community/${post.subreddit.slug}`}
+                  href={`/community/${post.subreddit?.slug?.current ?? ""}`}
                   className="font-semibold text-gray-800 hover:underline"
                 >
                   c/{post.subreddit.title}

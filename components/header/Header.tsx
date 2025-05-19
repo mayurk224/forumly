@@ -11,6 +11,7 @@ import Image from "next/image";
 import { ChevronLeftIcon, MenuIcon } from "lucide-react";
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "../ui/button";
+import CreatePost from "../post/CreatePost";
 
 const Header = () => {
   // const { user } = useUser();
@@ -31,7 +32,7 @@ const Header = () => {
           ) : (
             <MenuIcon className="w-6 h-6" />
           )}
-        </button>  
+        </button>
 
         {/* Desktop Logo */}
         <Image
@@ -40,8 +41,7 @@ const Header = () => {
           width={150}
           height={60}
           className={open ? "hidden" : "block md:block"}
-
-        />       
+        />
 
         {/* Mobile Logo */}
         <Image
@@ -55,6 +55,7 @@ const Header = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-2">
+        <CreatePost/>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
