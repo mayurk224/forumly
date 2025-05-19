@@ -6,8 +6,13 @@ import { getUser } from "@/sanity/lib/user/getUser";
 export async function reportContent(contentId: string) {
   const user = await getUser();
 
-  if ("error" in user) {
-    return { error: user.error };
+  if (!user || "error" in user) {
+    return { error: user?.error || "Unauthorized" };
+  }
+
+  const existing = await adminClient.getDocument(contentId);
+  if (!existing) {
+    return { error: "Content not found" };
   }
 
   const result = await adminClient

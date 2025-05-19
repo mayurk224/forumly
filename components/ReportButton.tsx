@@ -17,12 +17,15 @@ function ReportButton({ contentId }: ReportButtonProps) {
   const handleReport = async () => {
     if (isReported || isLoading || !isSignedIn) return;
     setIsLoading(true);
+
     try {
       const response = await reportContent(contentId);
-      if (response.error) {
-        setIsReported(false);
+
+      if (response?.error) {
         console.error("Error reporting content:", response.error);
+        return; // exit without setting `isReported`
       }
+
       setIsReported(true);
     } catch (error) {
       console.error("Error reporting content:", error);
@@ -33,6 +36,7 @@ function ReportButton({ contentId }: ReportButtonProps) {
 
   return (
     <button
+      aria-label={isReported ? "Content reported" : "Report content"}
       className={`flex items-center gap-1.5 font-medium text-gray-500 hover:text-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
         isReported ? "text-red-500" : ""
       }`}
