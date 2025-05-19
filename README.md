@@ -15,7 +15,7 @@ Forumly is a modern forum/community platform inspired by Reddit, built with Next
 - **Responsive Design**: Fully responsive UI that works on all devices
 - **Dark Mode Support**: Toggle between light and dark themes
 - **Content Moderation**: Report inappropriate content
-- **AI Integration**: AI-powered features using OpenAI
+- **AI Integration**: AI-powered features using OpenAI for content moderation
 
 ## 🛠️ Technology Stack
 
