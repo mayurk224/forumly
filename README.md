@@ -2,7 +2,7 @@
 
 Forumly is a modern forum/community platform inspired by Reddit, built with Next.js 15 and Sanity CMS. It allows users to create communities, share posts, engage in discussions, and more.
 
-![Forumly]()
+![Forumly](https://github.com/mayurk224/forumly/blob/main/public/images/Forumly%20-%20SCREENSHOT.png)
 
 ## 🌟 Features
 
