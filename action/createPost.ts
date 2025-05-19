@@ -5,11 +5,11 @@ import { adminClient } from "@/sanity/lib/adminClient";
 import { getSubredditBySlug } from "@/sanity/lib/subreddit/getSubredditBySlug";
 import { getUser } from "@/sanity/lib/user/getUser";
 import { auth } from "@clerk/nextjs/server";
-// import { CoreMessage, generateText } from "ai";
-// import { createClerkToolkit } from "@clerk/agent-toolkit/ai-sdk";
-// import { openai } from "@ai-sdk/openai";
-// import { censorPost, reportUser } from "@/tools/tools";
-// import { systemPrompt } from "@/tools/prompt";
+import { CoreMessage, generateText } from "ai";
+import { createClerkToolkit } from "@clerk/agent-toolkit/ai-sdk";
+import { openai } from "@ai-sdk/openai";
+import { censorPost, reportUser } from "@/tools/tools";
+import { systemPrompt } from "@/prompt";
 
 export type PostImageData = {
   base64: string;
@@ -148,37 +148,37 @@ export async function createPost({
     // ----- MOD STEP ----
     // TODO: Implement content moderation API call
 
-    // console.log("Starting content moderation process");
-    // const messages: CoreMessage[] = [
-    //   {
-    //     role: "user",
-    //     content: `I posted this post -> Post ID: ${post._id}\nTitle: ${title}\nBody: ${body}`,
-    //   },
-    // ];
+    console.log("Starting content moderation process");
+    const messages: CoreMessage[] = [
+      {
+        role: "user",
+        content: `I posted this post -> Post ID: ${post._id}\nTitle: ${title}\nBody: ${body}`,
+      },
+    ];
 
-    // console.log("Prepared messages for moderation:", JSON.stringify(messages));
+    console.log("Prepared messages for moderation:", JSON.stringify(messages));
 
-    // try {
-    //   const authContext = await auth.protect();
-    //   const toolkit = await createClerkToolkit({ authContext });
-    //   const result = await generateText({
-    //     model: openai("gpt-4.1-mini"),
-    //     messages: messages as CoreMessage[],
-    //     // Conditionally inject session claims if we have auth context
-    //     system: toolkit.injectSessionClaims(systemPrompt),
-    //     tools: {
-    //       ...toolkit.users(),
-    //       censorPost,
-    //       reportUser,
-    //     },
-    //   });
+    try {
+      const authContext = await auth.protect();
+      const toolkit = await createClerkToolkit({ authContext });
+      const result = await generateText({
+        model: openai("gpt-4.1-mini"),
+        messages: messages as CoreMessage[],
+        // Conditionally inject session claims if we have auth context
+        system: toolkit.injectSessionClaims(systemPrompt),
+        tools: {
+          ...toolkit.users(),
+          censorPost,
+          reportUser,
+        },
+      });
 
-    //   console.log("AI moderation completed successfully", result);
-    // } catch (error) {
-    //   console.error("Error in content moderation:", error);
-    //   // Don't fail the whole post creation if moderation fails
-    //   console.log("Continuing without content moderation");
-    // }
+      console.log("AI moderation completed successfully", result);
+    } catch (error) {
+      console.error("Error in content moderation:", error);
+      // Don't fail the whole post creation if moderation fails
+      console.log("Continuing without content moderation");
+    }
 
     // ----- END MOD STEP ----
 
