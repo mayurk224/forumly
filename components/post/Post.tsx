@@ -13,6 +13,7 @@ import { MessagesSquare } from "lucide-react";
 import CommentInput from "../comment/CommentInput";
 import { CommentList } from "../comment/CommentList";
 import PostVoteButtons from "./PostVoteButtons";
+import ReportButton from "../ReportButton";
 
 interface PostProps {
   post: AllPostsQueryResult[number] | GetPostsForSubredditQueryResult[number];
@@ -108,6 +109,9 @@ async function Post({ post, userId }: PostProps) {
             />
           </div>
         </div>
+      </div>
+      <div className="absolute top-0 right-0 p-2">
+        <ReportButton contentId={post._id} />
       </div>
     </article>
   );
