@@ -6,7 +6,13 @@ import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import React from "react";
 
-async function CommunityPage({ params }: { params: { slug: string } }) {
+interface CommunityPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+async function CommunityPage({ params }: CommunityPageProps) {
   const { slug } = params;
   const community = await getSubredditBySlug(slug);
   if (!community) {
