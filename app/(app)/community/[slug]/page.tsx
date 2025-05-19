@@ -1,4 +1,3 @@
-import { Metadata } from "next"; // optional, for SEO
 import Post from "@/components/post/Post";
 import { urlFor } from "@/sanity/lib/image";
 import { getPostsForSubreddit } from "@/sanity/lib/subreddit/getPostsForSubreddit";
