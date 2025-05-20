@@ -7,9 +7,10 @@ import { useState } from "react";
 
 interface ReportButtonProps {
   contentId: string;
+  reported: boolean;
 }
 
-function ReportButton({ contentId }: ReportButtonProps) {
+function ReportButton({ contentId, reported }: ReportButtonProps) {
   const [isReported, setIsReported] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { isSignedIn } = useUser();
@@ -38,14 +39,20 @@ function ReportButton({ contentId }: ReportButtonProps) {
     <button
       aria-label={isReported ? "Content reported" : "Report content"}
       className={`flex items-center gap-1.5 font-medium text-gray-500 hover:text-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-        isReported ? "text-red-500" : ""
-      }`}
+        isReported || reported ? "text-red-500" : ""
+      } `}
       onClick={handleReport}
-      disabled={!isSignedIn || isLoading || isReported}
+      disabled={!isSignedIn || isLoading || isReported || reported}
     >
-      <Flag className={`size-4 ${isReported ? "fill-red-500" : ""}`} />
+      <Flag
+        className={`size-4 ${isReported || reported ? "fill-red-500" : ""}`}
+      />
       <span className="hidden sm:block">
-        {isReported ? "Reported" : isSignedIn ? "Report" : "Sign in to report"}
+        {isReported || reported
+          ? "Reported"
+          : isSignedIn
+          ? "Report"
+          : "Sign in to report"}
       </span>
     </button>
   );

@@ -473,7 +473,7 @@ export type GetPostByIdQueryResult = {
 
 // Source: ./sanity/lib/post/getPosts.ts
 // Variable: AllPostsQuery
-// Query: *[_type == "post" && isDeleted == false] {            _id,            title,            "slug":slug.current,            body,            publishedAt,            "author": author->,             "subreddit": subreddit->,             image,             isDeleted        } | order(publishedAt desc)
+// Query: *[_type == "post" && isDeleted == false] {            _id,            title,            "slug":slug.current,            body,            publishedAt,            "author": author->,             "subreddit": subreddit->,             image,             isDeleted,             isReported        } | order(publishedAt desc)
 export type AllPostsQueryResult = Array<{
   _id: string;
   title: string | null;
@@ -553,6 +553,7 @@ export type AllPostsQueryResult = Array<{
     _type: "image";
   } | null;
   isDeleted: boolean | null;
+  isReported: boolean | null;
 }>;
 
 // Source: ./sanity/lib/subreddit/createSubreddit.ts
@@ -1015,7 +1016,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"comment\" && _id == $commentId][0] {\n      _id,\n      content,\n      createdAt,\n      \"author\": author->,\n      isDeleted\n    }\n  ": GetCommentByIdQueryResult;
     "\n        *[_type == \"comment\" && parentComment._ref == $commentId] {\n            ...,\n            _id,\n            content,\n            createdAt,\n            \"author\": author->,\n            \"replies\": *[_type == \"comment\" && parentComment._ref == ^._id],\n            \"votes\": {\n                \"upvotes\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"upvote\"]),\n                \"downvotes\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"downvote\"]),\n                \"netScore\": count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"upvote\"])\n                - count(*[_type == \"vote\" && comment._ref == ^._id && voteType == \"downvote\"]),\n                \"voteStatus\": *[_type == \"vote\" && comment._ref == ^._id && user._ref == $userId][0].voteType\n            },\n        } | order(votes.netScore desc)\n\n        ": GetCommentRepliesQueryResult;
     "\n    *[_type == \"post\" && _id == $postId][0] {\n      _id,\n      title,\n      \"slug\": slug.current,\n      body,\n      publishedAt,\n      \"author\": author->,\n      \"subreddit\": subreddit->,\n      image,\n      isDeleted\n    }\n  ": GetPostByIdQueryResult;
-    "\n        *[_type == \"post\" && isDeleted == false] {\n            _id,\n            title,\n            \"slug\":slug.current,\n            body,\n            publishedAt,\n            \"author\": author->,\n             \"subreddit\": subreddit->,\n             image,\n             isDeleted\n        } | order(publishedAt desc)\n        ": AllPostsQueryResult;
+    "\n        *[_type == \"post\" && isDeleted == false] {\n            _id,\n            title,\n            \"slug\":slug.current,\n            body,\n            publishedAt,\n            \"author\": author->,\n             \"subreddit\": subreddit->,\n             image,\n             isDeleted,\n             isReported\n        } | order(publishedAt desc)\n        ": AllPostsQueryResult;
     "\n            *[_type == \"subreddit\" && title == $name][0]{\n            _id\n            }\n        ": ChekingExistingQueryResult;
     "\n                *[_type == \"subreddit\" && slug.current == $slug][0]{\n                _id\n                }\n            ": CheckSlugQueryResult;
     "\n        *[_type == \"post\" && subreddit._ref == $id && isDeleted == false] {\n        ...,\n        \"slug\": slug.current,\n        \"author\": author->,\n        \"subreddit\": subreddit->,\n        \"category\": category->,\n        \"upvotes\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"upvote\"]),\n        \"downvotes\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"downvote\"]),\n        \"netScore\": count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"upvote\"]) - count(*[_type == \"vote\" && post._ref == ^._id && voteType == \"downvote\"]),\n        \"commentCount\": count(*[_type == \"comment\" && post._ref == ^._id])\n      } | order(publishedAt desc)\n        ": GetPostsForSubredditQueryResult;
