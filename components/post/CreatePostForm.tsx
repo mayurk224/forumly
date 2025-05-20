@@ -207,7 +207,7 @@ function CreatePostForm() {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 transition"
+          className="w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 transition"
           disabled={isLoading}
         >
           {isLoading ? "Creating..." : "Post"}
