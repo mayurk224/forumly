@@ -60,7 +60,7 @@ function DeleteButton({
         aria-label={`Delete ${contentType}`}
         disabled={isDeleted}
         onClick={handleDelete}
-        className={`flex items-center gap-1.5 font-medium text-gray-500 hover:text-red-500 transition-colors mt-1 disabled:opacity-50 disabled:cursor-not-allowed ${
+        className={`flex items-center gap-1.5 font-medium text-gray-500 hover:text-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
           isDeleted ? "text-red-500" : ""
         }`}
       >

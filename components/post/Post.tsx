@@ -122,7 +122,7 @@ async function Post({ post, userId }: PostProps) {
       </div>
 
       {/* Control Buttons */}
-      <div className="absolute top-0 right-0 flex flex-col items-end space-y-1 p-2">
+      <div className="absolute top-0 right-0 flex gap-2 items-center justify-center space-y-1 p-2">
         <ReportButton contentId={post._id} reported={!!post.isReported} />
         {post.author?._id && (
           <DeleteButton

@@ -22,26 +22,26 @@ export default async function CommunityPage({
       {/* Community Banner */}
       <section className="bg-white border-b dark:bg-gray-900 dark:border-gray-800">
         <div className="mx-auto max-w-7xl px-4 py-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             {community?.image?.asset?._ref && (
-              <div className="relative h-16 w-16 overflow-hidden rounded-full border dark:border-gray-700">
+              <div className="relative h-16 w-16 overflow-hidden rounded-full border dark:border-gray-700 flex-shrink-0">
                 <Image
                   src={urlFor(community.image).url()}
                   alt={
                     community.image.alt || `${community.title} community icon`
                   }
                   fill
-                  className="object-contain"
+                  className="object-cover"
                   priority
                 />
               </div>
             )}
-            <div>
+            <div className="text-center sm:text-left">
               <h1 className="text-2xl font-bold dark:text-white">
                 {community.title}
               </h1>
               {community.description && (
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                   {community.description}
                 </p>
               )}
