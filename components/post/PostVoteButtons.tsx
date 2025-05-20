@@ -6,7 +6,7 @@ import {
   GetPostVotesQueryResult,
   GetUserPostVoteStatusQueryResult,
 } from "@/sanity.types";
-import { useUser } from "@clerk/nextjs";
+import { SignIn, useUser } from "@clerk/nextjs";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import React, { useState, useTransition } from "react";
 
@@ -107,7 +107,9 @@ function PostVoteButtons({
           optimisticVotes?.voteType === "upvote"
             ? "bg-orange-100 text-orange-500 dark:bg-orange-900 dark:text-orange-400"
             : "hover:bg-gray-100 text-gray-400 dark:hover:bg-zinc-800 dark:text-zinc-400"
-        } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+        } ${isPending ? "opacity-50 cursor-not-allowed" : ""} ${
+          !isSignedIn || !user ? "cursor-not-allowed" : ""
+        }`}
         onClick={handleUpVote}
         disabled={isPending || !isSignedIn || !user}
         title="Upvote"
@@ -124,7 +126,9 @@ function PostVoteButtons({
           optimisticVotes?.voteType === "downvote"
             ? "bg-orange-100 text-orange-500 dark:bg-orange-900 dark:text-orange-400"
             : "hover:bg-gray-100 text-gray-400 dark:hover:bg-zinc-800 dark:text-zinc-400"
-        } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+        } ${isPending ? "opacity-50 cursor-not-allowed" : ""} ${
+          !isSignedIn || !user ? "cursor-not-allowed" : ""
+        }`}
         onClick={handleDownVote}
         disabled={isPending || !isSignedIn || !user}
         title="Downvote"
